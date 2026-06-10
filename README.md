@@ -75,7 +75,7 @@ InsufficientBalanceException.java
 
 ## Author
 
-Rishi Krishnavanshi
+Hariom Yadav(Rishi)
 
 B.Tech Computer Science Student
 Learning Java Full Stack Development
