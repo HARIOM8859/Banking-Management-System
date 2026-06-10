@@ -10,25 +10,27 @@ public class Bank {
         accountCount++;
         System.out.println("Account Created Successfully!");
     }
-    public void ViewAccount(long AccountNumber){
+    public void ViewAccount(long AccountNumber) throws AccountNotFoundException {
         for(int i=0; i<accountCount; i++){
             if(accounts[i].AccountNumber == AccountNumber){
                 System.out.println("Account Holer Name: "+ accounts[i].AccountHolderName);
                 System.out.println("Account Number: "+ accounts[i].AccountNumber);
                 System.out.println("Balance: "+ accounts[i].Balance);
                 System.out.println("Address: "+ accounts[i].Address);
-                System.out.println("PIN: "+ accounts[i].PIN);
                 System.out.println("Phone Number: "+ accounts[i].PhoneNumber);
                 System.out.println("DOB: "+ accounts[i].DOB);
                 return;
             }
         }
-        System.out.println("The Account Does not exist...");
+        throw new AccountNotFoundException();
     }
-    public void SearchAccount(long AccountNumber){
+    public void SearchAccount(long AccountNumber) throws AccountNotFoundException {
         ViewAccount(AccountNumber);
     }
-    public void Deposit(double Amount, long AccountNumber){
+    public void Deposit(double Amount, long AccountNumber) throws InvalidAmountException, AccountNotFoundException {
+        if(Amount <=0 ){
+            throw new InvalidAmountException();
+        }
         for(int i=0; i<accountCount; i++){
             if(accounts[i].AccountNumber == AccountNumber){
                 accounts[i].Balance += Amount;
@@ -36,9 +38,12 @@ public class Bank {
                 return;
             }
         }
-        System.out.println("The Account does not exist so can't deposit..");
+        throw new AccountNotFoundException();
     }
-    public void Withdraw(long AccountNumber, double Amount, String PIN){
+    public void Withdraw(long AccountNumber, double Amount, String PIN) throws InvalidAmountException, InsufficientBalanceException, InvalidPinException, AccountNotFoundException {
+        if(Amount <=0 ){
+            throw new InvalidAmountException();
+        }
         for(int i=0; i<accountCount; i++){
             if (accounts[i].AccountNumber == AccountNumber) {
                 if(accounts[i].PIN.equals(PIN)){
@@ -47,17 +52,21 @@ public class Bank {
                         System.out.println("The Amount "+ Amount + "is withdrawn Remaining balance is: "+ accounts[i].Balance);
                         return;
                     }
-                    System.out.println("Insufficient Balance...");
+                    throw new InsufficientBalanceException();
                 }
-                System.out.println("Entered Wrong PIN...");
+                throw new InvalidPinException();
             }
         }
-        System.out.println("The Account does not exist...");
+        throw new AccountNotFoundException();
     }
-    public void Transfer(long senderAccountNumber,long recieverAccountNumber,long amount){
+    public void Transfer(long senderAccountNumber,long recieverAccountNumber,double amount) throws InsufficientBalanceException, AccountNotFoundException, InvalidAmountException {
 
             Account sender = null;
             Account receiver = null;
+
+            if(amount <= 0){
+                throw new InvalidAmountException();
+            }
 
             // Find sender and receiver
             for(int i = 0; i < accountCount; i++){
@@ -73,14 +82,12 @@ public class Bank {
 
             // Check if accounts exist
             if(sender == null || receiver == null){
-                System.out.println("Sender or Receiver account not found");
-                return;
+                throw new AccountNotFoundException();
             }
 
             // Check balance
             if(sender.Balance < amount){
-                System.out.println("Insufficient Balance");
-                return;
+                throw new InsufficientBalanceException();
             }
 
             // Transfer money
@@ -92,7 +99,7 @@ public class Bank {
             System.out.println("Receiver Balance: " + receiver.Balance);
         }
 
-    public void DeleteAccount(long AccountNumber){
+    public void DeleteAccount(long AccountNumber) throws AccountNotFoundException {
         for(int i=0; i<accountCount; i++){
             if(accounts[i].AccountNumber == AccountNumber){
                 for(int j=i; j<accountCount-1; j++){
@@ -104,6 +111,6 @@ public class Bank {
                 return;
             }
         }
-        System.out.println("Account does not exist");
+        throw new AccountNotFoundException();
     }
 }

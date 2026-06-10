@@ -1,7 +1,7 @@
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws AccountNotFoundException, InvalidAmountException, InsufficientBalanceException, InvalidPinException {
         Account U1 = new Account("Hariom Yadav", 123456789, 2000, "New Mandi Etawah", "2126", "8859321534", "26/12/2005");
         Account U2 = new Account("Rishi", 56789012, 2500, "New Mandi Jamnagar", "1111", "8859321531", "26/12/2006");
         Account U3 = new Account("Harry", 456789012, 3000, "New Mandi Agra", "2612", "8859321532", "26/12/2007");
