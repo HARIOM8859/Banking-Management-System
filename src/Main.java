@@ -13,28 +13,129 @@ public class Main {
         bank.CreateAccount(U2);
         bank.CreateAccount(U3);
         bank.CreateAccount(U4);
-        bank.ViewAccount(123456789);
-        bank.ViewAccount(999999);
-        bank.Deposit(500, 123456789);
-        bank.ViewAccount(123456789);
 
-        bank.Withdraw(123456789, 1000, "2126");
-        bank.ViewAccount(123456789);
+// ================================
+// TEST 1: View Existing Account
+// ================================
+        try {
+            bank.ViewAccount(123456789);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
-        bank.Withdraw(123456789, 500, "0000");
+// ================================
+// TEST 2: Account Not Found
+// ================================
+        try {
+            bank.ViewAccount(999999999);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
-        bank.ViewAccount(123456789);
-        bank.ViewAccount(56789012);
+// ================================
+// TEST 3: Valid Deposit
+// ================================
+        try {
+            bank.Deposit(500, 123456789);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
-        bank.Transfer(123456789, 56789012, 500);
+// ================================
+// TEST 4: Invalid Deposit Amount
+// ================================
+        try {
+            bank.Deposit(-500, 123456789);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
-        bank.ViewAccount(123456789);
-        bank.ViewAccount(56789012);
+// ================================
+// TEST 5: Valid Withdraw
+// ================================
+        try {
+            bank.Withdraw(123456789, 500, "2126");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
-        bank.DeleteAccount(456789012);
+// ================================
+// TEST 6: Invalid PIN
+// ================================
+        try {
+            bank.Withdraw(123456789, 500, "0000");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
-        bank.ViewAccount(456789012);
+// ================================
+// TEST 7: Insufficient Balance
+// ================================
+        try {
+            bank.Withdraw(123456789, 100000, "2126");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
-        bank.SearchAccount(234567890);
+// ================================
+// TEST 8: Valid Transfer
+// ================================
+        try {
+            bank.Transfer(123456789, 56789012, 500);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            bank.ViewAccount(123456789);
+            bank.ViewAccount(56789012);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+// ================================
+// TEST 9: Transfer To Invalid Account
+// ================================
+        try {
+            bank.Transfer(123456789, 99999999, 500);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+// ================================
+// TEST 10: Delete Existing Account
+// ================================
+        try {
+            bank.DeleteAccount(456789012);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+// ================================
+// TEST 11: Verify Delete
+// ================================
+        try {
+            bank.ViewAccount(456789012);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+// ================================
+// TEST 12: Search Existing Account
+// ================================
+        try {
+            bank.SearchAccount(234567890);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+// ================================
+// TEST 13: Search Non Existing Account
+// ================================
+        try {
+            bank.SearchAccount(111111111);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
